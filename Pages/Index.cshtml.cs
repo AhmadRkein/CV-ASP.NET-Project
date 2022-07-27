@@ -12,19 +12,14 @@ namespace I3332Proj.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
-        private readonly DatabaseContext _context;
-        private readonly ExportingServices _exportingServices;
-        public IndexModel(ILogger<IndexModel> logger, DatabaseContext context, ExportingServices exportingServices)
+
+        public IndexModel()
         {
-            _logger = logger;
-            _context = context;
-            _exportingServices = exportingServices;
+
         }
 
         public void OnGet()
         {
-            _exportingServices.CreatePDF(_context.CVs.Find(1));
         }
     }
 }

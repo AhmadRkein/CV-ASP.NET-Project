@@ -1,10 +1,12 @@
 ﻿using I3332Proj.Models;
 using I3332Proj.Models.DataModels;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace I3332Proj.Services
 {
@@ -57,6 +59,11 @@ namespace I3332Proj.Services
             _context.SaveChanges();
 
             return dbCV;
+        }
+    
+        public async Task<CV> GetCV(int id)
+        {
+            return await _context.CVs.FirstOrDefaultAsync(m => m.Id == id);
         }
     }
 }

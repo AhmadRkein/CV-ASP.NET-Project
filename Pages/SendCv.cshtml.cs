@@ -13,12 +13,11 @@ namespace I3332Proj.Pages
 {
     public class SendCvModel : PageModel
     {
-        private readonly DatabaseContext _context;
+
         private readonly DatabaseServices _dbService;
 
-        public SendCvModel(DatabaseContext context, DatabaseServices dbService)
+        public SendCvModel(DatabaseServices dbService)
         {
-            _context = context;
             _dbService = dbService;
 
             Nationalities = new SelectList(_dbService.GetNationalities());

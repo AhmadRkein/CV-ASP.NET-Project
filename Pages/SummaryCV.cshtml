@@ -1,11 +1,11 @@
-﻿@page
+﻿@page "{handler?}"
 @model I3332Proj.Pages.SummaryCVModel
 
 @{
-    ViewData["Title"] = "SummaryCV";
+    ViewData["Title"] = "CV Summary";
 }
 
-<h1>SummaryCV</h1>
+<h1>CV Summary</h1>
 
 <div>
     <h4>CV</h4>
@@ -61,5 +61,6 @@
             @Html.DisplayFor(model => model.CvViewModel.Grade)
         </dd>
     </dl>
+    <a asp-page="SummaryCV" asp-page-handler="PDF" asp-route-id="@Model.Id" class="btn btn-primary" target="_blank">Open As PDF</a>
 </div>
 

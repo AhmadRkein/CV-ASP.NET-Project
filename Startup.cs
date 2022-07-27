@@ -54,11 +54,7 @@ namespace I3332Proj
             }
 
             app.UseHttpsRedirection();
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = new PhysicalFileProvider(Path.Combine(env.WebRootPath , "Images")),
-                RequestPath = "/Images"
-            });
+            app.UseStaticFiles();
 
             app.UseRouting();
 

@@ -5,35 +5,51 @@ using PdfSharp.Drawing.Layout;
 using PdfSharp.Pdf;
 using System.Diagnostics;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace I3332Proj.Services
 {
     public class ExportingServices
     {
         private readonly IWebHostEnvironment webHostEnvironment;
+        private readonly DatabaseServices databaseServices;
 
-        public ExportingServices(IWebHostEnvironment webHostEnvironment)
+        public ExportingServices(IWebHostEnvironment webHostEnvironment, DatabaseServices dbServices)
         {
             this.webHostEnvironment = webHostEnvironment;
+            databaseServices = dbServices;
         }
 
-        public void CreatePDF(CV cv)
+        public async Task<byte[]> CreatePDF(int id)
         {
+            var cv = await databaseServices.GetCV(id);
+
+            if (cv == null)
+                return null;
+
+            return CreatePDF(cv);
+        }
+
+        public byte[] CreatePDF(CV cv)
+        {
+            if (cv == null)
+                return null;
+
             // Create a new PDF document
-            PdfDocument document = new PdfDocument();
+            var document = new PdfDocument();
 
             // Create an empty page
-            PdfPage page = document.AddPage();
+            var page = document.AddPage();
 
             // Get an XGraphics object for drawing
-            XGraphics gfx = XGraphics.FromPdfPage(page);
+            var gfx = XGraphics.FromPdfPage(page);
 
             // Create a font
-            XFont font = new XFont("Verdana", 16, XFontStyle.Regular);
+            var font = new XFont("Verdana", 16, XFontStyle.Regular);
 
 
-            XTextFormatter tf = new XTextFormatter(gfx);
-            XRect photoRect = new XRect(50, 50, 200, 200);
+            var tf = new XTextFormatter(gfx);
+            var photoRect = new XRect(50, 50, 200, 200);
             gfx.DrawRectangle(XBrushes.White, photoRect);
 
             // Draw Photo
@@ -41,18 +57,27 @@ namespace I3332Proj.Services
             gfx.DrawImage(XImage.FromFile(photoPath), photoRect);
 
             // Draw the text
-            XRect textRect = new XRect(50, 300, page.Width - 50, page.Height - 300);
-            tf.DrawString(getString(cv), font, XBrushes.Black, textRect, XStringFormats.TopLeft);
+            var textRect = new XRect(50, 300, page.Width - 50, page.Height - 300);
+            tf.DrawString(GetStringContent(cv), font, XBrushes.Black, textRect, XStringFormats.TopLeft);
 
 
             // Save the document...
-            string filename = "HelloWorld.pdf";
-            document.Save(filename);
+            //string filename = "HelloWorld.pdf";
+            //document.Save(filename);
+
+            byte[] data;
+            using(var stream = new MemoryStream())
+            {
+                document.Save(stream);
+                data = stream.ToArray();
+            }
+
+            return data;
         }
 
-        private string getString(CV cv)
+        private string GetStringContent(CV cv)
         {
-            var result = $"" +
+            return $"" +
                 $"First Name: {cv.FirstName}" + "\n\n" +
                 $"Last Name: {cv.LastName}" + "\n\n" +
                 $"Date of Birth: {cv.BirthDate:dd-MMM-yyyy}" + "\n\n" +
@@ -62,7 +87,6 @@ namespace I3332Proj.Services
                 $"Programing Skills: {cv.ProgSkills.Replace(";", ", ")}" + "\n\n" +
                 $"Grade: {cv.Grade}";
             
-            return result;
         }
     }
 }
