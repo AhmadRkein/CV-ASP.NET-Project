@@ -1,6 +1,9 @@
+using I3332Proj.Models.DataModels;
+using I3332Proj.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -24,6 +27,13 @@ namespace I3332Proj
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+            services.AddDbContext<DatabaseContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnections"));
+            });
+
+            services.AddScoped<DatabaseServices>();
+            services.AddScoped<GradingService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,6 +61,10 @@ namespace I3332Proj
             {
                 endpoints.MapRazorPages();
             });
+
+            using var scope = app.ApplicationServices.CreateScope();
+            using var db = scope.ServiceProvider.GetService<DatabaseContext>();
+            db.InitializeDatabase();
         }
     }
 }

@@ -1,0 +1,106 @@
+﻿@page
+@model I3332Proj.Pages.SendCvModel
+
+@{
+    ViewData["Title"] = "SendCv";
+}
+
+<h1>SendCv</h1>
+
+<h4>CvBindingModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="CvBindingModel.FirstName" class="control-label"></label>
+                <input asp-for="CvBindingModel.FirstName" class="form-control" />
+                <span asp-validation-for="CvBindingModel.FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CvBindingModel.LastName" class="control-label"></label>
+                <input asp-for="CvBindingModel.LastName" class="form-control" />
+                <span asp-validation-for="CvBindingModel.LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CvBindingModel.BirthDate" class="control-label"></label>
+                <input asp-for="CvBindingModel.BirthDate" class="form-control" />
+                <span asp-validation-for="CvBindingModel.BirthDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CvBindingModel.Nationality" class="control-label"></label>
+                <select asp-for="CvBindingModel.Nationality" asp-items="Model.Nationalities" class="form-control"></select>
+                <span asp-validation-for="CvBindingModel.Nationality" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CvBindingModel.Gender" class="control-label"></label>
+                @*<input asp-for="CvBindingModel.Gender" class="form-control" />*@
+                @foreach (var gender in Model.Genders)
+                {
+                    @Html.RadioButtonFor(model => model.CvBindingModel.Gender, gender) @Html.Raw("&nbsp;&nbsp;")  @gender @Html.Raw("&nbsp;&nbsp;")
+                }
+                <span asp-validation-for="CvBindingModel.Gender" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CvBindingModel.ProgSkills" class="control-label"></label>
+                <table>
+                    @foreach (var skill in Model.ProgrammingSkills)
+                    {
+                        <tr>
+                            <td>
+                                <input id="@skill.Text" type="checkbox" name="CvBindingModel.ProgSkills" value="@skill.Text" @(Model.CvBindingModel?.ProgSkills?.Contains(skill.Text) == true?"checked":"") />
+                                @Html.Raw("&nbsp;")
+                                <label for="@skill.Text">@skill.Text</label>
+                            </td>
+                        </tr>
+                    }
+                </table>
+                <span asp-validation-for="CvBindingModel.ProgSkills" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CvBindingModel.Email" class="control-label"></label>
+                <input asp-for="CvBindingModel.Email" class="form-control" />
+                <span asp-validation-for="CvBindingModel.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CvBindingModel.ConfirmEmail" class="control-label"></label>
+                <input asp-for="CvBindingModel.ConfirmEmail" class="form-control" />
+                <span asp-validation-for="CvBindingModel.ConfirmEmail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CvBindingModel.X" class="control-label"></label>
+                <input asp-for="CvBindingModel.X" class="form-control" />
+                <span asp-validation-for="CvBindingModel.X" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CvBindingModel.Y" class="control-label"></label>
+                <input asp-for="CvBindingModel.Y" class="form-control" />
+                <span asp-validation-for="CvBindingModel.Y" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CvBindingModel.Sum" class="control-label"></label>
+                <input asp-for="CvBindingModel.Sum" class="form-control" />
+                <span asp-validation-for="CvBindingModel.Sum" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CvBindingModel.Photo" class="control-label"></label>
+                <input asp-for="CvBindingModel.Photo" />
+                <span asp-validation-for="CvBindingModel.Photo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
