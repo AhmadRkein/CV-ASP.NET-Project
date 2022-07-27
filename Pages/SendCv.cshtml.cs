@@ -52,9 +52,9 @@ namespace I3332Proj.Pages
                 return Page();
             }
 
-            _dbService.AddCV(CvBindingModel);
+            var cv = _dbService.AddCV(CvBindingModel);
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./SummaryCV", new { id = cv.Id });
         }
     }
 }

@@ -1,0 +1,65 @@
+﻿@page
+@model I3332Proj.Pages.SummaryCVModel
+
+@{
+    ViewData["Title"] = "SummaryCV";
+}
+
+<h1>SummaryCV</h1>
+
+<div>
+    <h4>CV</h4>
+    <hr />
+    <img src="@Model.CvViewModel.PhotoPath" class="rounded-circle" height="200" width="200" style="margin-bottom: 3rem;" />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CvViewModel.FirstName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CvViewModel.FirstName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CvViewModel.LastName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CvViewModel.LastName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CvViewModel.BirthDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CvViewModel.BirthDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CvViewModel.Nationality)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CvViewModel.Nationality)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CvViewModel.Gender)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CvViewModel.Gender)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CvViewModel.ProgSkills)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CvViewModel.ProgSkills)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CvViewModel.Email)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CvViewModel.Email)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CvViewModel.Grade)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CvViewModel.Grade)
+        </dd>
+    </dl>
+</div>
+

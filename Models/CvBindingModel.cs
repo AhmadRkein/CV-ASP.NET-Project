@@ -34,7 +34,7 @@ namespace I3332Proj.Models
         public string Gender { get; set; }
         
         [DisplayName("Programming Skills")]
-        public List<string> ProgSkills { get; set; }
+        public List<string> ProgSkills { get; set; } = new List<string>();
         
         [Required]
         [EmailAddress]

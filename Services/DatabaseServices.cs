@@ -1,5 +1,6 @@
 ﻿using I3332Proj.Models;
 using I3332Proj.Models.DataModels;
+using Microsoft.AspNetCore.Hosting;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -29,7 +30,7 @@ namespace I3332Proj.Services
 
         public CV AddCV(CvBindingModel cvBinding)
         {
-            var ImagesFolder = "./Images";
+            var ImagesFolder = "/Images";
             Directory.CreateDirectory(ImagesFolder);
 
             var fileExt = Path.GetExtension(cvBinding.Photo.FileName);
@@ -38,7 +39,7 @@ namespace I3332Proj.Services
             {
                 cvBinding.Photo.CopyTo(filestream);
             }
-
+            
             var dbCV = new CV()
             {
                 BirthDate = cvBinding.BirthDate,
