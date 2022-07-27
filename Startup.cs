@@ -36,6 +36,7 @@ namespace I3332Proj
 
             services.AddScoped<DatabaseServices>();
             services.AddScoped<GradingService>();
+            services.AddScoped<ExportingServices>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
