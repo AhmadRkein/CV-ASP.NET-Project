@@ -18,7 +18,7 @@ namespace I3332Proj.Models.DataModels
 
         public void InitializeDatabase()
         {
-            this.Database.EnsureCreated();
+            this.Database.Migrate();
 
             if (!Nationalities.Any())
             {
