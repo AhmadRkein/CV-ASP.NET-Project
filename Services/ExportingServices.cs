@@ -53,7 +53,7 @@ namespace I3332Proj.Services
             gfx.DrawRectangle(XBrushes.White, photoRect);
 
             // Draw Photo
-            var photoPath = Path.Combine(webHostEnvironment.WebRootPath, cv.PhotoPath.Substring(1));
+            var photoPath = Path.Combine(webHostEnvironment.WebRootPath, cv.PhotoPath);
             gfx.DrawImage(XImage.FromFile(photoPath), photoRect);
 
             // Draw the text
