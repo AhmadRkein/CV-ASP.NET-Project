@@ -14,10 +14,12 @@ namespace I3332Proj.Services
     {
         private readonly DatabaseContext _context;
         private readonly GradingService _grading;
-        public DatabaseServices(DatabaseContext context, GradingService grading)
+        private readonly IWebHostEnvironment webHostEnvironment;
+        public DatabaseServices(DatabaseContext context, GradingService grading, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
             _grading = grading;
+            this.webHostEnvironment = webHostEnvironment;
         }
 
         public List<string> GetNationalities()
@@ -32,12 +34,15 @@ namespace I3332Proj.Services
 
         public CV AddCV(CvBindingModel cvBinding)
         {
-            var ImagesFolder = "/Images";
-            Directory.CreateDirectory(ImagesFolder);
+            var ImagesFolder = "Images";
+            var ImagesFullPath = Path.Combine(webHostEnvironment.WebRootPath, ImagesFolder);
+            Directory.CreateDirectory(ImagesFullPath);
 
             var fileExt = Path.GetExtension(cvBinding.Photo.FileName);
-            var imagePath = Path.Combine(ImagesFolder, Guid.NewGuid().ToString() + fileExt);
-            using (var filestream = new FileStream(imagePath, FileMode.Create)) 
+            var fileName = Guid.NewGuid().ToString() + fileExt;
+            var imageFullPath = Path.Combine(ImagesFullPath, fileName);
+            var imageRelPath = Path.Combine(ImagesFolder, fileName);
+            using (var filestream = new FileStream(imageFullPath, FileMode.Create)) 
             {
                 cvBinding.Photo.CopyTo(filestream);
             }
@@ -52,7 +57,7 @@ namespace I3332Proj.Services
                 Nationality = cvBinding.Nationality,
                 ProgSkills = string.Join(";", cvBinding.ProgSkills),
                 Grade = _grading.CalculateGrade(cvBinding),
-                PhotoPath= imagePath,
+                PhotoPath= imageRelPath,
             };
 
             _context.Add(dbCV);
