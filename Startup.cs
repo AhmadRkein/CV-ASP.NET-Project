@@ -3,6 +3,7 @@ using I3332Proj.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,7 +29,10 @@ namespace I3332Proj
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddRazorPages();
+            services.AddRazorPages().AddRazorPagesOptions(options =>
+            {
+                options.Conventions.ConfigureFilter(new IgnoreAntiforgeryTokenAttribute());
+            });
             services.AddDbContext<DatabaseContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnections"));
@@ -37,6 +41,7 @@ namespace I3332Proj
             services.AddScoped<DatabaseServices>();
             services.AddScoped<GradingService>();
             services.AddScoped<ExportingServices>();
+            services.AddLogging();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

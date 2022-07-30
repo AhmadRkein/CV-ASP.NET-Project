@@ -1,0 +1,78 @@
+﻿@page "{handler?}"
+@model I3332Proj.Pages.BrowseCVsModel
+@{
+    ViewData["Title"] = "Browse CVs";
+}
+
+<h1>Browse CVs</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.AllCVs.FirstOrDefault().FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AllCVs.FirstOrDefault().LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AllCVs.FirstOrDefault().Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AllCVs.FirstOrDefault().Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AllCVs.FirstOrDefault().Grade)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var cv in Model.AllCVs)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => cv.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => cv.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => cv.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => cv.Gender)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => cv.Grade)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@cv.Id">Edit</a> |
+                    <a asp-page="./SummaryCV" asp-route-id="@cv.Id">Details</a> |
+                    <a href="#" onclick="return DeleteCV('@cv.Id','@cv.FirstName','@cv.LastName');">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        function DeleteCV(ID, firstname, lastname) {
+            if (confirm("Are you sure you want to delete " + firstname + " " + lastname + "'s CV?")) {
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Page("BrowseCVs","DeleteCV")",
+                    data: {Id:ID},
+                    success: DeleteSuccess
+                });
+            }
+
+            return false;
+        }
+
+        function DeleteSuccess() {
+            location.reload();
+        }
+    </script>
+}

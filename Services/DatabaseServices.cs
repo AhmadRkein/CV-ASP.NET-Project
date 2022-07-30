@@ -70,5 +70,21 @@ namespace I3332Proj.Services
         {
             return await _context.CVs.FirstOrDefaultAsync(m => m.Id == id);
         }
+        public async Task<List<CV>> GetAllCVs()
+        {
+            return await _context.CVs.ToListAsync();
+        }
+
+        public void DeleteCV(int id)
+        {
+            var cv = _context.CVs.Find(id);
+            if (cv is null)
+            {
+                return;
+            }
+
+            _context.CVs.Remove(cv);
+            _context.SaveChanges();
+        }
     }
 }
