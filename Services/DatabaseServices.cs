@@ -87,6 +87,7 @@ namespace I3332Proj.Services
         {
             return await _context.CVs.FirstOrDefaultAsync(m => m.Id == id);
         }
+        
         public async Task<List<CV>> GetAllCVsAsync()
         {
             return await _context.CVs.ToListAsync();
@@ -99,6 +100,10 @@ namespace I3332Proj.Services
             {
                 return;
             }
+
+            var photoFullPath = Path.Combine(webHostEnvironment.WebRootPath, cv.PhotoPath);
+            if (File.Exists(photoFullPath))
+                File.Delete(photoFullPath);
 
             _context.CVs.Remove(cv);
             await _context.SaveChangesAsync();
