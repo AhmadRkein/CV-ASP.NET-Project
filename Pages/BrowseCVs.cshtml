@@ -47,7 +47,7 @@
                     @Html.DisplayFor(modelItem => cv.Grade)
                 </td>
                 <td>
-                    <a asp-page="./Edit" asp-route-id="@cv.Id">Edit</a> |
+                    <a asp-page="./CvEdit" asp-route-id="@cv.Id">Edit</a> |
                     <a asp-page="./SummaryCV" asp-route-id="@cv.Id">Details</a> |
                     <a href="#" onclick="return DeleteCV('@cv.Id','@cv.FirstName','@cv.LastName');">Delete</a>
                 </td>

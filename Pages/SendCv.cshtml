@@ -48,7 +48,7 @@
                     {
                         <tr>
                             <td>
-                                <input id="@skill.Text" type="checkbox" name="CvBindingModel.ProgSkills" value="@skill.Text" @(Model.CvBindingModel?.ProgSkills?.Contains(skill.Text) == true?"checked":"") />
+                                <input id="@skill.Text" type="checkbox" name="@nameof(Model.CvBindingModel).@nameof(Model.CvBindingModel.ProgSkills)" value="@skill.Text" @(Model.CvBindingModel?.ProgSkills?.Contains(skill.Text) == true?"checked":"") />
                                 @Html.Raw("&nbsp;")
                                 <label for="@skill.Text">@skill.Text</label>
                             </td>

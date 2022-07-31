@@ -39,7 +39,7 @@ namespace I3332Proj.Pages
         public CvBindingModel CvBindingModel { get; set; }
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
             if ((CvBindingModel.X + CvBindingModel.Y) != CvBindingModel.Sum)
             {
@@ -51,7 +51,7 @@ namespace I3332Proj.Pages
                 return Page();
             }
 
-            var cv = _dbService.AddCV(CvBindingModel);
+            var cv = await _dbService.AddCVAsync(CvBindingModel);
 
             return RedirectToPage("./SummaryCV", new { id = cv.Id });
         }

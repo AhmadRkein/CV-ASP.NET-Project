@@ -24,5 +24,26 @@ namespace I3332Proj.Services
 
             return grade;
         }
+        
+        public int CalculateGrade(CvEditBindingModel cv)
+        {
+            int grade = 0;
+
+            foreach (var skill in cv.ProgSkills)
+            {
+                grade += 10;
+            }
+
+            if(cv.Gender.ToLower() == "male")
+            {
+                grade += 5;
+            }
+            else
+            {
+                grade += 10;
+            }
+
+            return grade;
+        }
     }
 }

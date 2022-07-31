@@ -1,0 +1,91 @@
+﻿@page
+@model I3332Proj.Pages.CvEditModel
+@{
+    ViewData["Title"] = "Edit CV";
+}
+
+<h1>Edit CV</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <input type="hidden" asp-for="CV.Id" />
+            <div class="row form-group">
+                <div class="col-md-3">
+                    <img src="@Model.CV.PhotoPath" height="100" width="100" />
+                </div>
+                <div class="col-md-3">
+                    <label asp-for="CV.Photo" class="control-label"></label>
+                    <input asp-for="CV.Photo" />
+                    <span asp-validation-for="CV.Photo" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="CV.FirstName" class="control-label"></label>
+                <input asp-for="CV.FirstName" class="form-control" />
+                <span asp-validation-for="CV.FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CV.LastName" class="control-label"></label>
+                <input asp-for="CV.LastName" class="form-control" />
+                <span asp-validation-for="CV.LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CV.BirthDate" class="control-label"></label>
+                <input asp-for="CV.BirthDate" class="form-control" />
+                <span asp-validation-for="CV.BirthDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CV.Nationality" class="control-label"></label>
+                <select asp-for="CV.Nationality" asp-items="Model.Nationalities" class="form-control"></select>
+                <span asp-validation-for="CV.Nationality" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CV.Gender" class="control-label"></label>
+                @foreach (var gender in Model.Genders)
+                {
+                    @Html.RadioButtonFor(model => model.CV.Gender, gender) @Html.Raw("&nbsp;&nbsp;")  @gender @Html.Raw("&nbsp;&nbsp;")
+                }
+                <span asp-validation-for="CV.Gender" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CV.ProgSkills" class="control-label"></label>
+                <table>
+                    @foreach (var skill in Model.ProgrammingSkills)
+                    {
+                        <tr>
+                            <td>
+                                <input id="@skill.Text" type="checkbox" name="@nameof(Model.CV).@nameof(Model.CV.ProgSkills)" value="@skill.Text" @(Model.CV?.ProgSkills?.Contains(skill.Text) == true?"checked":"") />
+                                @Html.Raw("&nbsp;")
+                                <label for="@skill.Text">@skill.Text</label>
+                            </td>
+                        </tr>
+                    }
+                </table>
+                <span asp-validation-for="CV.ProgSkills" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CV.Email" class="control-label"></label>
+                <input asp-for="CV.Email" class="form-control" />
+                <span asp-validation-for="CV.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CV.Grade" class="control-label"></label>
+                <input asp-for="CV.Grade" disabled class="form-control" />
+                <span asp-validation-for="CV.Grade" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+                <a asp-page="BrowseCVs" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
