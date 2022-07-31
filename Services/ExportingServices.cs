@@ -22,7 +22,7 @@ namespace I3332Proj.Services
 
         public async Task<byte[]> CreatePDF(int id)
         {
-            var cv = await databaseServices.GetCV(id);
+            var cv = await databaseServices.GetCVAsync(id);
 
             if (cv == null)
                 return null;

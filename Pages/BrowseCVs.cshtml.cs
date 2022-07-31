@@ -20,7 +20,7 @@ namespace I3332Proj.Pages
         public List<BrowseCvViewModel> AllCVs { get; set; } = new();
         public async Task OnGetAsync()
         {
-            var all = await databaseServices.GetAllCVs();
+            var all = await databaseServices.GetAllCVsAsync();
 
             AllCVs = all.Select(x => new BrowseCvViewModel()
             {
@@ -36,12 +36,12 @@ namespace I3332Proj.Pages
         [BindProperty]
         public int? Id { get; set; }
 
-        public IActionResult OnPostDeleteCV()
+        public async Task<IActionResult> OnPostDeleteCV()
         {
             if (Id is null)
                 return NotFound();
 
-            databaseServices.DeleteCV(Id.Value);
+            await databaseServices.DeleteCVAsync(Id.Value);
 
             return new OkResult();
         }

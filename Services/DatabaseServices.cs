@@ -66,25 +66,25 @@ namespace I3332Proj.Services
             return dbCV;
         }
     
-        public async Task<CV> GetCV(int id)
+        public async Task<CV> GetCVAsync(int id)
         {
             return await _context.CVs.FirstOrDefaultAsync(m => m.Id == id);
         }
-        public async Task<List<CV>> GetAllCVs()
+        public async Task<List<CV>> GetAllCVsAsync()
         {
             return await _context.CVs.ToListAsync();
         }
 
-        public void DeleteCV(int id)
+        public async Task DeleteCVAsync(int id)
         {
-            var cv = _context.CVs.Find(id);
+            var cv = await _context.CVs.FindAsync(id);
             if (cv is null)
             {
                 return;
             }
 
             _context.CVs.Remove(cv);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }

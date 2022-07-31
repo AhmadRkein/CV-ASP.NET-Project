@@ -33,7 +33,7 @@ namespace I3332Proj.Pages
                 return NotFound();
             }
 
-            var cv = await _dbServices.GetCV(Id.Value);
+            var cv = await _dbServices.GetCVAsync(Id.Value);
 
             if (cv == null)
             {
