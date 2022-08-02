@@ -103,7 +103,11 @@ namespace I3332Proj.Services
 
             var photoFullPath = Path.Combine(webHostEnvironment.WebRootPath, cv.PhotoPath);
             if (File.Exists(photoFullPath))
+            {
+                System.GC.Collect();
+                System.GC.WaitForPendingFinalizers();
                 File.Delete(photoFullPath);
+            }
 
             _context.CVs.Remove(cv);
             await _context.SaveChangesAsync();
